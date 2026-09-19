@@ -49,15 +49,15 @@
 
 ## 🚀 Como Usar
 
-### Opção 1: Via Duplo Clique (Recomendado)
-1. Baixe ou clone este repositório.
-2. Dê duplo clique no arquivo **`Organizador-LEG3NDY.cmd`**.
-3. Escolha a opção desejada pelo teclado.
+### Para o Usuário Final (Arquivo Único 100% Portátil)
+1. Baixe o arquivo **`Organizador-LEG3NDY.cmd`** (você só precisa deste arquivo único!).
+2. Dê duplo clique nele em qualquer pasta do seu computador (Downloads, Área de Trabalho, Pen drive ou HD externo).
+3. Ele executa a si mesmo instantaneamente! Basta ter o Python instalado no Windows.
 
-> 💡 **Dica de Portabilidade:** Você pode copiar o arquivo `Organizador-LEG3NDY.cmd` para **qualquer pasta** do seu computador (ex: Área de Trabalho, HD externo, Pen drive). Ao abri-lo lá, ele automaticamente reconhece aquela pasta como a pasta ativa!
+> 💡 **Portabilidade Total:** Você pode enviar **apenas** o `Organizador-LEG3NDY.cmd` para qualquer amigo via WhatsApp, Telegram ou Discord. Ele é 100% auto-suficiente e não precisa de nenhum outro arquivo de apoio para funcionar!
 
-### Opção 2: Pelo Terminal / Linha de Comando
-Você também pode chamar o script Python diretamente, passando opcionalmente o caminho da pasta como argumento:
+### Para Desenvolvedores / Linha de Comando
+Você também pode rodar diretamente o código-fonte em Python:
 
 ```bash
 # Executa na pasta padrão (ou pasta atual)
@@ -144,12 +144,27 @@ O organizador carrega essas configurações automaticamente na inicialização s
 
 ```text
 organizador-arquivos/
-├── Organizador-LEG3NDY.cmd    # Launcher executável no Windows (Estilo MAS)
-├── organizador.py             # Motor autônomo completo em Python
+├── Organizador-LEG3NDY.cmd    # Executável único 100% auto-suficiente para o usuário final
+├── organizador.py             # Código-fonte principal em Python (para desenvolvedores)
+├── build_cmd.py               # Compilador que gera o .cmd auto-suficiente
 ├── config.json                # Configuração personalizável de extensões
 ├── .gitignore                 # Arquivos ignorados pelo Git
 └── README.md                  # Documentação oficial
 ```
+
+---
+
+## 🛠️ Para Desenvolvedores (Como Modificar e Gerar o .cmd)
+
+O projeto é estruturado de forma desacoplada e limpa:
+
+1. **`organizador.py` (Código-Fonte)**: Todo o desenvolvimento acontece aqui. É onde você cria novas categorias, adiciona novas heurísticas ou ajusta as regras de organização.
+2. **`build_cmd.py` (Compilador)**: Após fazer qualquer alteração em `organizador.py`, execute:
+   ```bash
+   python build_cmd.py
+   ```
+   Ele mescla o código-fonte com o cabeçalho universal *Batch/Python Polyglot*, gerando automaticamente o executável `Organizador-LEG3NDY.cmd` atualizado e pronto para distribuição.
+3. **`Organizador-LEG3NDY.cmd` (Standalone)**: Não depende de nenhum outro arquivo de motor. É um arquivo único que pode ser enviado para qualquer usuário com Windows.
 
 ---
 

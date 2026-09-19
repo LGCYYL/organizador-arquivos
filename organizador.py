@@ -183,6 +183,12 @@ def obter_categoria(nome_arquivo: str) -> str:
     _, ext = os.path.splitext(nome_lower)
 
     # 1. Auto-detecção dinâmica: NUNCA move a si mesmo, independente de como o usuário renomear o arquivo!
+    try:
+        self_exec = os.path.basename(sys.argv[0]).lower()
+        if nome_lower == self_exec:
+            return "IGNORAR"
+    except Exception:
+        pass
     self_launcher = os.environ.get("ORGANIZADOR_SELF", "").lower()
     if self_launcher and nome_lower == self_launcher:
         return "IGNORAR"
@@ -836,12 +842,13 @@ def acao_desfazer(pasta_base: str):
 # ══════════════════════════════════════════════════════════════════════
 
 def main():
-    if len(sys.argv) > 1 and os.path.isdir(sys.argv[1]):
-        pasta_padrao = os.path.abspath(sys.argv[1])
+    if len(sys.argv) > 1 and sys.argv[1].strip() and os.path.isdir(sys.argv[1].strip().rstrip('"\\')):
+        pasta_padrao = os.path.abspath(sys.argv[1].strip().rstrip('"\\'))
     else:
-        user_downloads = os.path.join(os.path.expanduser("~"), "Downloads")
-        if os.path.exists(user_downloads):
-            pasta_padrao = user_downloads
+        # Por padrão, assume a pasta onde o próprio script/launcher está localizado!
+        dir_onde_esta = os.path.dirname(os.path.abspath(sys.argv[0]))
+        if dir_onde_esta and os.path.isdir(dir_onde_esta):
+            pasta_padrao = dir_onde_esta
         else:
             pasta_padrao = os.getcwd()
 
