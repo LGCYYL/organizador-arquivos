@@ -1,0 +1,37 @@
+{
+  "descricao": "Configuracao de Categorias e Extensoes do Organizador Inteligente",
+  "categorias": {
+    "Imagens": {
+      "pasta": "Imagens",
+      "exts": [".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico", ".bmp", ".tiff", ".heic", ".psd", ".ai", ".raw"]
+    },
+    "Documentos": {
+      "pasta": "Documentos",
+      "exts": [".pdf", ".docx", ".doc", ".xlsx", ".xls", ".pptx", ".ppt", ".txt", ".md", ".csv", ".epub", ".odt", ".rtf"]
+    },
+    "Instaladores": {
+      "pasta": "Instaladores",
+      "exts": [".exe", ".msi", ".iso", ".dmg", ".pkg", ".deb", ".rpm"]
+    },
+    "Compactados": {
+      "pasta": "Compactados",
+      "exts": [".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz", ".tgz"]
+    },
+    "Vídeos": {
+      "pasta": "Vídeos",
+      "exts": [".mp4", ".mkv", ".avi", ".mov", ".wmv", ".webm", ".flv", ".m4v"]
+    },
+    "Áudio": {
+      "pasta": "Áudio",
+      "exts": [".mp3", ".wav", ".ogg", ".flac", ".aac", ".m4a", ".wma", ".opus"]
+    },
+    "Código e Dev": {
+      "pasta": "Código e Dev",
+      "exts": [".json", ".py", ".js", ".ts", ".html", ".css", ".sql", ".pem", ".key", ".yaml", ".yml", ".sh", ".bat", ".cmd", ".xml", ".cpp", ".c", ".java", ".rs", ".go"]
+    },
+    "Outros": {
+      "pasta": "Outros",
+      "exts": [".mcworld", ".torrent"]
+    }
+  }
+}
