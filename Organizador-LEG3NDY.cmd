@@ -1,9 +1,4 @@
 @echo off
-:: ==============================================================================
-::  ORGANIZADOR INTELIGENTE DE ARQUIVOS — LEG3NDY Edition
-::  Launcher Nativo para Windows (Compativel com Windows 10 e 11)
-::  Versao: 2.1 (Suporte Completo a 21 Categorias e 150+ Extensoes)
-:: ==============================================================================
 title Organizador Inteligente de Arquivos - LEG3NDY Edition
 mode 80,32 >nul 2>&1
 chcp 65001 >nul
