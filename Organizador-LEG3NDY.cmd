@@ -1,4 +1,30 @@
-@echo off & title Organizador Inteligente de Arquivos - LEG3NDY Edition & mode 80,32 >nul 2>&1 & chcp 65001 >nul & (where python >nul 2>&1 && python -x "%~f0" %* || (where py >nul 2>&1 && py -x "%~f0" %* || (echo. & echo ============================================================================== & echo  [ERRO] O Python nao foi encontrado instalado neste computador! & echo ============================================================================== & echo. & echo  Requisito do Sistema: Python 3.7 ou superior (Recomendado 3.10+) & echo  Download oficial:     https://www.python.org/downloads/ & echo. & echo  * IMPORTANTE: No instalador do Python, marque a opcao: & echo    "[X] Add Python to PATH" para que o sistema reconheca o comando. & echo. & pause))) & exit /b
+@echo off
+rem = """
+title Organizador Inteligente de Arquivos - LEG3NDY Edition
+mode 80,32 >nul 2>&1
+chcp 65001 >nul
+
+set "PY_CMD="
+where python >nul 2>&1 && set "PY_CMD=python"
+if not defined PY_CMD where py >nul 2>&1 && set "PY_CMD=py"
+if not defined PY_CMD (
+    echo.
+    echo ==============================================================================
+    echo  [ERRO] O Python nao foi encontrado instalado neste computador!
+    echo ==============================================================================
+    echo.
+    echo  Requisito do Sistema: Python 3.7 ou superior - Recomendado 3.10+
+    echo  Download oficial:     https://www.python.org/downloads/
+    echo.
+    echo  * IMPORTANTE: No instalador do Python, marque a opcao:
+    echo    "[X] Add Python to PATH" para que o terminal reconheca o comando.
+    echo.
+    pause
+    exit /b 1
+)
+%PY_CMD% -x "%~f0" %*
+exit /b %errorlevel%
+"""
 """
 ==============================================================================
                 ORGANIZADOR INTELIGENTE DE ARQUIVOS
