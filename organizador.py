@@ -9,6 +9,7 @@ import os
 import sys
 import shutil
 import json
+import unicodedata
 from datetime import datetime
 from typing import Dict, List, Any, Optional
 
@@ -39,39 +40,95 @@ C_MAGENTA = "\033[95m"
 C_GRAY    = "\033[90m"
 C_BLUE    = "\033[94m"
 
-# Mapeamento Universal de Categorias
+# Mapeamento Universal de Categorias (LEG3NDY Edition)
 CATEGORIAS = {
     "Imagens": {
         "pasta": "Imagens",
-        "exts": {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico", ".bmp", ".tiff", ".heic", ".psd", ".ai", ".raw"}
-    },
-    "Documentos": {
-        "pasta": "Documentos",
-        "exts": {".pdf", ".docx", ".doc", ".xlsx", ".xls", ".pptx", ".ppt", ".txt", ".md", ".csv", ".epub", ".odt", ".rtf"}
-    },
-    "Instaladores": {
-        "pasta": "Instaladores",
-        "exts": {".exe", ".msi", ".iso", ".dmg", ".pkg", ".deb", ".rpm"}
-    },
-    "Compactados": {
-        "pasta": "Compactados",
-        "exts": {".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz", ".tgz"}
+        "exts": {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico", ".bmp", ".tiff", ".tif", ".heic", ".heif", ".raw", ".cr2", ".nef", ".arw"}
     },
     "Vídeos": {
         "pasta": "Vídeos",
-        "exts": {".mp4", ".mkv", ".avi", ".mov", ".wmv", ".webm", ".flv", ".m4v"}
+        "exts": {".mp4", ".mkv", ".avi", ".mov", ".wmv", ".webm", ".flv", ".m4v", ".mpg", ".mpeg", ".3gp", ".ts", ".m2ts"}
     },
     "Áudio": {
         "pasta": "Áudio",
-        "exts": {".mp3", ".wav", ".ogg", ".flac", ".aac", ".m4a", ".wma", ".opus"}
+        "exts": {".mp3", ".wav", ".ogg", ".flac", ".aac", ".m4a", ".wma", ".opus", ".aiff", ".alac", ".mid", ".midi"}
+    },
+    "Documentos": {
+        "pasta": "Documentos",
+        "exts": {".pdf", ".docx", ".doc", ".txt", ".md", ".rtf", ".odt", ".pages", ".tex"}
+    },
+    "Planilhas": {
+        "pasta": "Planilhas",
+        "exts": {".xlsx", ".xls", ".csv", ".tsv", ".ods", ".numbers", ".xlsm", ".xlsb"}
+    },
+    "Apresentações": {
+        "pasta": "Apresentações",
+        "exts": {".pptx", ".ppt", ".pps", ".ppsx", ".key", ".odp", ".potx"}
+    },
+    "Livros e E-books": {
+        "pasta": "Livros_e_Ebooks",
+        "exts": {".epub", ".mobi", ".azw", ".azw3", ".cbr", ".cbz", ".djvu", ".fb2", ".ibooks"}
+    },
+    "Design e 3D": {
+        "pasta": "Design_e_3D",
+        "exts": {".psd", ".ai", ".eps", ".xd", ".fig", ".sketch", ".blend", ".obj", ".fbx", ".stl", ".3ds", ".step", ".stp", ".dwg", ".dxf", ".dae", ".ply", ".max", ".c4d"}
+    },
+    "Fontes": {
+        "pasta": "Fontes",
+        "exts": {".ttf", ".otf", ".woff", ".woff2", ".eot", ".fon"}
+    },
+    "Presets e Projetos": {
+        "pasta": "Presets_e_Projetos",
+        "exts": {".cube", ".xmp", ".lrtemplate", ".aep", ".prproj", ".drp", ".flp", ".als", ".cpr", ".fst", ".sf2", ".ffx"}
+    },
+    "Instaladores": {
+        "pasta": "Instaladores",
+        "exts": {".exe", ".msi", ".dmg", ".pkg", ".deb", ".rpm", ".appimage"}
+    },
+    "Mobile e APKs": {
+        "pasta": "Mobile_e_APKs",
+        "exts": {".apk", ".xapk", ".apks", ".ipa", ".aab"}
+    },
+    "Imagens de Disco": {
+        "pasta": "Imagens_Disco",
+        "exts": {".iso", ".img", ".vhd", ".vhdx", ".vmdk", ".vdi", ".bin", ".cue", ".nrg", ".mdf"}
+    },
+    "Compactados": {
+        "pasta": "Compactados",
+        "exts": {".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz", ".tgz", ".zst", ".lzma", ".cab"}
     },
     "Código e Dev": {
         "pasta": "Código e Dev",
-        "exts": {".json", ".py", ".js", ".ts", ".html", ".css", ".sql", ".pem", ".key", ".yaml", ".yml", ".sh", ".bat", ".cmd", ".xml", ".cpp", ".c", ".java", ".rs", ".go"}
+        "exts": {".json", ".py", ".js", ".ts", ".jsx", ".tsx", ".html", ".htm", ".css", ".scss", ".sass", ".less", ".yaml", ".yml", ".xml", ".sh", ".bash", ".bat", ".cmd", ".ps1", ".c", ".cpp", ".h", ".hpp", ".cs", ".java", ".rs", ".go", ".php", ".rb", ".swift", ".kt", ".lua", ".vue", ".dart"}
+    },
+    "Backups e Bancos": {
+        "pasta": "Backups_e_Bancos",
+        "exts": {".bak", ".backup", ".dump", ".sql", ".db", ".sqlite", ".sqlite3", ".db3", ".mdb", ".accdb", ".gho"}
+    },
+    "Chaves e Certificados": {
+        "pasta": "Chaves_e_Certificados",
+        "exts": {".pem", ".key", ".cer", ".crt", ".pfx", ".p12", ".der", ".csr", ".pub"}
+    },
+    "Jogos e ROMs": {
+        "pasta": "Jogos_e_ROMs",
+        "exts": {".rom", ".nes", ".sfc", ".smc", ".gba", ".gbc", ".nds", ".n64", ".nsp", ".xci", ".chd", ".rvz", ".cso", ".pbp", ".gcm", ".cia", ".3ds", ".mcworld", ".mcpack", ".mctemplate", ".pak", ".vpk"}
+    },
+    "Legendas": {
+        "pasta": "Legendas",
+        "exts": {".srt", ".sub", ".vtt", ".ass", ".ssa", ".idx"}
+    },
+    "Torrents": {
+        "pasta": "Torrents",
+        "exts": {".torrent"}
+    },
+    "Atalhos Web": {
+        "pasta": "Atalhos_Web",
+        "exts": {".url", ".webloc", ".website"}
     },
     "Outros": {
         "pasta": "Outros",
-        "exts": {".mcworld", ".torrent"}
+        "exts": set()
     }
 }
 
@@ -267,19 +324,35 @@ IGNORAR_DIRS_PESADOS = {
     "target", "vendor", ".idea", ".vscode"
 }
 
+def remover_acentos(texto: str) -> str:
+    return "".join(
+        c for c in unicodedata.normalize("NFD", texto)
+        if unicodedata.category(c) != "Mn"
+    )
+
 def obter_mapeamento_pastas_organizador() -> Dict[str, str]:
     mapeamento = {}
     for cat_nome, c in CATEGORIAS.items():
         pasta = c["pasta"]
-        mapeamento[pasta.lower()] = cat_nome
-    variacoes = {
-        "videos": "Vídeos",
-        "audio": "Áudio",
-        "codigo e dev": "Código e Dev"
-    }
-    for v_low, cat_nome in variacoes.items():
-        if v_low not in mapeamento:
-            mapeamento[v_low] = cat_nome
+        pasta_lower = pasta.lower()
+        pasta_sem_acento = remover_acentos(pasta_lower)
+
+        formas = {
+            pasta_lower,
+            pasta_sem_acento,
+            pasta_lower.replace("_", " "),
+            pasta_sem_acento.replace("_", " "),
+            pasta_lower.replace(" ", "_"),
+            pasta_sem_acento.replace(" ", "_"),
+            cat_nome.lower(),
+            remover_acentos(cat_nome.lower()),
+            cat_nome.lower().replace(" ", "_"),
+            remover_acentos(cat_nome.lower()).replace(" ", "_")
+        }
+        for f in formas:
+            if f and f not in mapeamento:
+                mapeamento[f] = cat_nome
+
     return mapeamento
 
 def contar_subpastas_rapido(pasta_base: str) -> int:

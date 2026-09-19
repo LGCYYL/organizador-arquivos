@@ -71,16 +71,32 @@ python organizador.py "D:\MinhasFotos"
 
 ## 📁 Categorias Pré-configuradas
 
+O Organizador LEG3NDY conta com mapeamento exaustivo para mais de 150 extensões comuns, organizando seus arquivos em destinos específicos sem poluição (pastas vazias **nunca** são criadas se não houver arquivos correspondentes):
+
 | Categoria | Pasta de Destino | Extensões Suportadas |
 | :--- | :--- | :--- |
-| 🖼️ **Imagens** | `Imagens/` | `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.svg`, `.ico`, `.bmp`, `.tiff`, `.heic`, `.psd`, `.ai`, `.raw` |
-| 📄 **Documentos** | `Documentos/` | `.pdf`, `.docx`, `.doc`, `.xlsx`, `.xls`, `.pptx`, `.ppt`, `.txt`, `.md`, `.csv`, `.epub`, `.odt`, `.rtf` |
-| ⚙️ **Instaladores** | `Instaladores/` | `.exe`, `.msi`, `.iso`, `.dmg`, `.pkg`, `.deb`, `.rpm` |
-| 📦 **Compactados** | `Compactados/` | `.zip`, `.rar`, `.7z`, `.tar`, `.gz`, `.bz2`, `.xz`, `.tgz` |
-| 🎬 **Vídeos** | `Vídeos/` | `.mp4`, `.mkv`, `.avi`, `.mov`, `.wmv`, `.webm`, `.flv`, `.m4v` |
-| 🎵 **Áudio** | `Áudio/` | `.mp3`, `.wav`, `.ogg`, `.flac`, `.aac`, `.m4a`, `.wma`, `.opus` |
-| 💻 **Código e Dev** | `Código e Dev/` | `.json`, `.py`, `.js`, `.ts`, `.html`, `.css`, `.sql`, `.pem`, `.key`, `.yaml`, `.yml`, `.sh`, `.bat`, `.cmd`, `.xml`, `.cpp`, `.c`, `.java`, `.rs`, `.go` |
-| 📁 **Outros** | `Outros/` | `.mcworld`, `.torrent` e demais formatos não mapeados |
+| 🖼️ **Imagens** | `Imagens/` | `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.svg`, `.ico`, `.bmp`, `.tiff`, `.tif`, `.heic`, `.heif`, `.raw`, `.cr2`, `.nef`, `.arw` |
+| 🎬 **Vídeos** | `Vídeos/` | `.mp4`, `.mkv`, `.avi`, `.mov`, `.wmv`, `.webm`, `.flv`, `.m4v`, `.mpg`, `.mpeg`, `.3gp`, `.ts`, `.m2ts` |
+| 🎵 **Áudio** | `Áudio/` | `.mp3`, `.wav`, `.ogg`, `.flac`, `.aac`, `.m4a`, `.wma`, `.opus`, `.aiff`, `.alac`, `.mid`, `.midi` |
+| 📄 **Documentos** | `Documentos/` | `.pdf`, `.docx`, `.doc`, `.txt`, `.md`, `.rtf`, `.odt`, `.pages`, `.tex` |
+| 📊 **Planilhas** | `Planilhas/` | `.xlsx`, `.xls`, `.csv`, `.tsv`, `.ods`, `.numbers`, `.xlsm`, `.xlsb` |
+| 📽️ **Apresentações** | `Apresentações/` | `.pptx`, `.ppt`, `.pps`, `.ppsx`, `.key`, `.odp`, `.potx` |
+| 📚 **Livros e E-books** | `Livros_e_Ebooks/` | `.epub`, `.mobi`, `.azw`, `.azw3`, `.cbr`, `.cbz`, `.djvu`, `.fb2`, `.ibooks` |
+| 🎨 **Design e 3D** | `Design_e_3D/` | `.psd`, `.ai`, `.eps`, `.xd`, `.fig`, `.sketch`, `.blend`, `.obj`, `.fbx`, `.stl`, `.3ds`, `.step`, `.stp`, `.dwg`, `.dxf`, `.dae`, `.ply`, `.max`, `.c4d` |
+| 🔤 **Fontes** | `Fontes/` | `.ttf`, `.otf`, `.woff`, `.woff2`, `.eot`, `.fon` |
+| 🎛️ **Presets e Projetos** | `Presets_e_Projetos/` | `.cube`, `.xmp`, `.lrtemplate`, `.aep`, `.prproj`, `.drp`, `.flp`, `.als`, `.cpr`, `.fst`, `.sf2`, `.ffx` |
+| ⚙️ **Instaladores** | `Instaladores/` | `.exe`, `.msi`, `.dmg`, `.pkg`, `.deb`, `.rpm`, `.appimage` |
+| 📱 **Mobile e APKs** | `Mobile_e_APKs/` | `.apk`, `.xapk`, `.apks`, `.ipa`, `.aab` |
+| 💽 **Imagens de Disco** | `Imagens_Disco/` | `.iso`, `.img`, `.vhd`, `.vhdx`, `.vmdk`, `.vdi`, `.bin`, `.cue`, `.nrg`, `.mdf` |
+| 📦 **Compactados** | `Compactados/` | `.zip`, `.rar`, `.7z`, `.tar`, `.gz`, `.bz2`, `.xz`, `.tgz`, `.zst`, `.lzma`, `.cab` |
+| 💻 **Código e Dev** | `Código e Dev/` | `.json`, `.py`, `.js`, `.ts`, `.jsx`, `.tsx`, `.html`, `.htm`, `.css`, `.scss`, `.sass`, `.less`, `.yaml`, `.yml`, `.xml`, `.sh`, `.bash`, `.bat`, `.cmd`, `.ps1`, `.c`, `.cpp`, `.h`, `.hpp`, `.cs`, `.java`, `.rs`, `.go`, `.php`, `.rb`, `.swift`, `.kt`, `.lua`, `.vue`, `.dart` |
+| 💾 **Backups e Bancos** | `Backups_e_Bancos/` | `.bak`, `.backup`, `.dump`, `.sql`, `.db`, `.sqlite`, `.sqlite3`, `.db3`, `.mdb`, `.accdb`, `.gho` |
+| 🔐 **Chaves e Certificados** | `Chaves_e_Certificados/` | `.pem`, `.key`, `.cer`, `.crt`, `.pfx`, `.p12`, `.der`, `.csr`, `.pub` |
+| 🎮 **Jogos e ROMs** | `Jogos_e_ROMs/` | `.rom`, `.nes`, `.sfc`, `.smc`, `.gba`, `.gbc`, `.nds`, `.n64`, `.nsp`, `.xci`, `.chd`, `.rvz`, `.cso`, `.pbp`, `.gcm`, `.cia`, `.3ds`, `.mcworld`, `.mcpack`, `.mctemplate`, `.pak`, `.vpk` |
+| 🎬 **Legendas** | `Legendas/` | `.srt`, `.sub`, `.vtt`, `.ass`, `.ssa`, `.idx` |
+| 🧲 **Torrents** | `Torrents/` | `.torrent` |
+| 🌐 **Atalhos Web** | `Atalhos_Web/` | `.url`, `.webloc`, `.website` |
+| 📁 **Outros** | `Outros/` | Demais formatos e extensões não mapeadas |
 
 ---
 
