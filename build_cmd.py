@@ -13,8 +13,10 @@ HEADER = (
     '(echo. & echo ============================================================================== & '
     'echo  [ERRO] O Python nao foi encontrado instalado neste computador! & '
     'echo ============================================================================== & echo. & '
-    'echo  Para usar o Organizador, instale o Python: https://www.python.org/downloads/ & '
-    'echo  * IMPORTANTE: No instalador, marque a opcao "Add Python to PATH". & echo. & pause))) & exit /b\n'
+    'echo  Requisito do Sistema: Python 3.7 ou superior (Recomendado 3.10+) & '
+    'echo  Download oficial:     https://www.python.org/downloads/ & echo. & '
+    'echo  * IMPORTANTE: No instalador do Python, marque a opcao: & '
+    'echo    "[X] Add Python to PATH" para que o sistema reconheca o comando. & echo. & pause))) & exit /b\n'
 )
 
 def build():

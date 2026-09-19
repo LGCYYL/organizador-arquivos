@@ -16,7 +16,7 @@
 * ⏪ **Histórico e Reversão (Undo Completo)**: Toda movimentação é registrada em um banco de auditoria oculto (`.organizador_historico.json`). Se você mudar de ideia, a opção `[5]` restaura tudo ao local original.
 * 🎯 **Auto-Preservação Dinâmica**: O launcher `Organizador-LEG3NDY.cmd` detecta a si mesmo em tempo de execução. Mesmo que você o renomeie para qualquer outro nome, ele **nunca** será movido para dentro de subpastas.
 * 🌐 **Universal**: Funciona em Downloads, Área de Trabalho, Pen drives, HDs externos ou qualquer pasta do seu computador.
-* 📦 **Zero Dependências**: Feito em Python puro utilizando apenas a biblioteca padrão (`os`, `shutil`, `json`, `datetime`). Não precisa instalar nada via `pip`.
+* 📦 **Zero Dependências Externas**: Feito em Python puro utilizando apenas a biblioteca padrão (`os`, `shutil`, `json`, `datetime`). Requer apenas **Python 3.7 ou superior (Recomendado 3.10+)**. Não precisa instalar nada via `pip`.
 
 ---
 
@@ -48,6 +48,11 @@
 ---
 
 ## 🚀 Como Usar
+
+> 📋 **Requisitos do Sistema:**
+> * **Python 3.7 ou superior** instalado (recomendado **Python 3.10+**).
+> * Download oficial gratuito: [python.org/downloads](https://www.python.org/downloads/)
+> * ⚠️ **Atenção no instalador do Windows:** Certifique-se de marcar a opção **`[X] Add Python to PATH`** logo na primeira tela da instalação para habilitar o comando no terminal.
 
 ### Para o Usuário Final (Arquivo Único 100% Portátil)
 1. Baixe o arquivo **`Organizador-LEG3NDY.cmd`** (você só precisa deste arquivo único!).

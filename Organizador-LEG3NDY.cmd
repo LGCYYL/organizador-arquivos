@@ -1,4 +1,4 @@
-@echo off & title Organizador Inteligente de Arquivos - LEG3NDY Edition & mode 80,32 >nul 2>&1 & chcp 65001 >nul & (where python >nul 2>&1 && python -x "%~f0" %* || (where py >nul 2>&1 && py -x "%~f0" %* || (echo. & echo ============================================================================== & echo  [ERRO] O Python nao foi encontrado instalado neste computador! & echo ============================================================================== & echo. & echo  Para usar o Organizador, instale o Python: https://www.python.org/downloads/ & echo  * IMPORTANTE: No instalador, marque a opcao "Add Python to PATH". & echo. & pause))) & exit /b
+@echo off & title Organizador Inteligente de Arquivos - LEG3NDY Edition & mode 80,32 >nul 2>&1 & chcp 65001 >nul & (where python >nul 2>&1 && python -x "%~f0" %* || (where py >nul 2>&1 && py -x "%~f0" %* || (echo. & echo ============================================================================== & echo  [ERRO] O Python nao foi encontrado instalado neste computador! & echo ============================================================================== & echo. & echo  Requisito do Sistema: Python 3.7 ou superior (Recomendado 3.10+) & echo  Download oficial:     https://www.python.org/downloads/ & echo. & echo  * IMPORTANTE: No instalador do Python, marque a opcao: & echo    "[X] Add Python to PATH" para que o sistema reconheca o comando. & echo. & pause))) & exit /b
 """
 ==============================================================================
                 ORGANIZADOR INTELIGENTE DE ARQUIVOS
@@ -13,6 +13,21 @@ import json
 import unicodedata
 from datetime import datetime
 from typing import Dict, List, Any, Optional
+
+# Verificação de versão mínima do interpretador
+if sys.version_info < (3, 7):
+    print("\n==============================================================================")
+    print(" [ERRO] Versão do Python incompatível!")
+    print(" O Organizador requer Python 3.7 ou superior (Recomendado 3.10+).")
+    print(f" Versão detectada neste computador: {sys.version.split()[0]}")
+    print(" Baixe a versão mais recente em: https://www.python.org/downloads/")
+    print("==============================================================================\n")
+    try:
+        import msvcrt
+        msvcrt.getch()
+    except Exception:
+        pass
+    sys.exit(1)
 
 # Suporte a tecla única sem precisar de Enter no Windows
 try:

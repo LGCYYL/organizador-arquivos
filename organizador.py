@@ -13,6 +13,21 @@ import unicodedata
 from datetime import datetime
 from typing import Dict, List, Any, Optional
 
+# Verificação de versão mínima do interpretador
+if sys.version_info < (3, 7):
+    print("\n==============================================================================")
+    print(" [ERRO] Versão do Python incompatível!")
+    print(" O Organizador requer Python 3.7 ou superior (Recomendado 3.10+).")
+    print(f" Versão detectada neste computador: {sys.version.split()[0]}")
+    print(" Baixe a versão mais recente em: https://www.python.org/downloads/")
+    print("==============================================================================\n")
+    try:
+        import msvcrt
+        msvcrt.getch()
+    except Exception:
+        pass
+    sys.exit(1)
+
 # Suporte a tecla única sem precisar de Enter no Windows
 try:
     import msvcrt
