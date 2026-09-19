@@ -84,6 +84,27 @@ python organizador.py "D:\MinhasFotos"
 
 ---
 
+## 🏷️ Entendendo as Tags e Classificações de Subpastas
+
+Ao utilizar o **Diagnóstico de Subpastas [3]** ou **Gerenciar Subpastas [4]**, o organizador analisa profundamente as pastas existentes para entender seu propósito antes de tomar qualquer decisão. Cada pasta recebe uma classificação com selo visual colorido:
+
+| Tag / Badge | Significado | Exemplo Prático | Ação Recomendada pelo Sistema |
+| :--- | :--- | :--- | :--- |
+| `[PASTA DO ORGANIZADOR]` | Pastas padrão criadas e gerenciadas pelo próprio organizador. | `Imagens/`, `Documentos/`, `Instaladores/` | **Manter intacta.** Serve como destino oficial dos arquivos organizados. Caso esteja com 0 arquivos, o usuário pode removê-la se desejar. |
+| `[COLEÇÃO TEMÁTICA]` | Pastas onde $\ge 75\%$ dos arquivos pertencem à mesma categoria. | `fotos_viagem_2024/` (40 fotos), `album_rock/` (12 MP3s), `faturas/` (15 PDFs) | **Mover a pasta inteira** para a categoria correspondente (ex: `Imagens/fotos_viagem_2024/`). Preserva o contexto e o agrupamento original sem espalhar os arquivos. |
+| `[DRIVER / SOFTWARE]` | Pastas contendo programas portáteis, drivers descompactados ou projetos de código. | `DRV_Audio_Realtek/` (com `.inf`, `.sys`, `.dll`), `meu-app/` (com `package.json`, `.git`) | **Proteção Ativa (Não desmembrar).** Jamais desmembra os arquivos para não quebrar executáveis e drivers interdependentes. Permite mover a pasta inteira para `Instaladores/` ou mantê-la onde está. |
+| `[PASTA VAZIA]` | Pastas que não contêm nenhum arquivo (0 itens e 0 B). | Diretórios residuais de downloads antigos ou zips excluídos. | **Limpeza Segura.** Permite excluir a pasta vazia diretamente pelo menu interativo com segurança. |
+| `[MISTA]` | Pastas com múltiplos tipos de arquivos misturados sem predominância evidente. | Pasta `downloads_antigos/` com 2 vídeos, 3 zips e 4 documentos. | **Decisão Manual.** Permite ao usuário escolher entre mover a pasta inteira para a categoria mais próxima ou desmembrar os arquivos internos. |
+
+### 🤔 O que é uma "Coleção Temática" e por que ela existe?
+
+Imagine que você baixou uma pasta chamada `fotos_aniversario` com 50 fotos dentro, ou uma pasta `curso_python` com 20 apostilas em PDF:
+
+* **O problema dos organizadores comuns:** Um script simplório pegaria os 50 arquivos de fotos e os jogaria soltos na pasta `Imagens/`, misturando-os com centenas de outras fotos e **destruindo a pasta temática** que você já tinha organizado e nomeado.
+* **A solução inteligente do Organizador LEG3NDY:** O motor detecta que mais de 75% do conteúdo daquela pasta pertence à mesma categoria e a classifica como **`[COLEÇÃO TEMÁTICA]`**. Em vez de desmembrar e espalhar os arquivos, ele sugere **mover a pasta inteira** para dentro de `Imagens/fotos_aniversario/`. Assim, a raiz de seus Downloads fica perfeitamente limpa, enquanto a sua coleção temática permanece intacta, organizada e no lugar certo!
+
+---
+
 ## ⚙️ Customização Fácil (`config.json`)
 
 Se você desejar adicionar novas extensões ou alterar nomes de pastas, basta editar o arquivo **`config.json`** na pasta do projeto:

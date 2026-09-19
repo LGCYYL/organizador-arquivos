@@ -267,31 +267,75 @@ IGNORAR_DIRS_PESADOS = {
     "target", "vendor", ".idea", ".vscode"
 }
 
+def obter_mapeamento_pastas_organizador() -> Dict[str, str]:
+    mapeamento = {}
+    for cat_nome, c in CATEGORIAS.items():
+        pasta = c["pasta"]
+        mapeamento[pasta.lower()] = cat_nome
+    variacoes = {
+        "videos": "Vídeos",
+        "audio": "Áudio",
+        "codigo e dev": "Código e Dev"
+    }
+    for v_low, cat_nome in variacoes.items():
+        if v_low not in mapeamento:
+            mapeamento[v_low] = cat_nome
+    return mapeamento
+
 def contar_subpastas_rapido(pasta_base: str) -> int:
-    """Conta rapidamente as subpastas em 0.0001s sem varredura profunda."""
-    pastas_sistema = {c["pasta"].lower() for c in CATEGORIAS.values()}
+    """Conta rapidamente todas as subpastas em 0.0001s sem varredura profunda."""
     try:
         return sum(
             1 for item in os.scandir(pasta_base)
-            if item.is_dir() and item.name.lower() not in pastas_sistema and not item.name.startswith(".")
+            if item.is_dir() and not item.name.startswith(".")
         )
     except Exception:
         return 0
 
 def analisar_subpastas(pasta_base: str) -> List[Dict[str, Any]]:
-    pastas_sistema = {c["pasta"].lower() for c in CATEGORIAS.values()}
+    pastas_sistema = obter_mapeamento_pastas_organizador()
     resultado = []
 
     try:
-        itens = [e for e in os.scandir(pasta_base) if e.is_dir() and e.name.lower() not in pastas_sistema and not e.name.startswith(".")]
+        itens = [e for e in os.scandir(pasta_base) if e.is_dir() and not e.name.startswith(".")]
+        itens.sort(key=lambda e: e.name.lower())
     except Exception:
         return []
 
     for item_dir in itens:
         caminho_pasta = item_dir.path
         nome = item_dir.name
+        nome_lower = nome.lower()
 
-        # 1. Detecção ultrarrápida no nível 1 da subpasta (identifica projetos em 0.001s)
+        # 1. Se for uma pasta criada e gerenciada pelo próprio organizador
+        if nome_lower in pastas_sistema:
+            cat_nome = pastas_sistema[nome_lower]
+            arqs_count = 0
+            tam_total = 0
+            try:
+                for raiz, dirs, arqs in os.walk(caminho_pasta):
+                    dirs[:] = [d for d in dirs if d.lower() not in IGNORAR_DIRS_PESADOS and not d.startswith(".")]
+                    for a in arqs:
+                        arqs_count += 1
+                        try:
+                            tam_total += os.path.getsize(os.path.join(raiz, a))
+                        except OSError:
+                            pass
+            except Exception:
+                pass
+
+            resultado.append({
+                "nome": nome,
+                "caminho": caminho_pasta,
+                "qtd": arqs_count,
+                "tamanho_fmt": formatar_tamanho(tam_total),
+                "tipo": "PASTA_ORGANIZADA",
+                "cat_dominante": cat_nome,
+                "motivo": f"Pasta oficial do organizador para '{cat_nome}'"
+            })
+            continue
+
+        # 2. Detecção ultrarrápida no nível 1 da subpasta (identifica projetos em 0.001s)
         try:
             entradas_nivel1 = {e.name.lower() for e in os.scandir(caminho_pasta)}
             if any(m in entradas_nivel1 for m in ["package.json", ".git", "cargo.toml", "setup.py", "requirements.txt", "go.mod", "tsconfig.json", "node_modules"]):
@@ -308,7 +352,7 @@ def analisar_subpastas(pasta_base: str) -> List[Dict[str, Any]]:
         except Exception:
             pass
 
-        # 2. Varredura com poda inteligente de pastas pesadas (node_modules, etc)
+        # 3. Varredura com poda inteligente de pastas pesadas (node_modules, etc)
         arquivos_internos = []
         tam_total = 0
         contagem_cats: Dict[str, int] = {}
@@ -481,7 +525,10 @@ def acao_diagnosticar_pastas(pasta_base: str):
     print(f"{C_GRAY}------------------------------------------------------------------------------{C_RESET}")
 
     for i, p in enumerate(pastas, 1):
-        if p["tipo"] == "SOFTWARE_DRIVER":
+        if p["tipo"] == "PASTA_ORGANIZADA":
+            badge = f"{C_GREEN}[PASTA DO ORGANIZADOR]{C_RESET}"
+            rec = f"{C_GREEN}Pasta oficial do script • Destino padrão para '{p['cat_dominante']}'{C_RESET}"
+        elif p["tipo"] == "SOFTWARE_DRIVER":
             badge = f"{C_MAGENTA}[DRIVER / SOFTWARE]{C_RESET}"
             rec = f"{C_MAGENTA}Recomendado: Manter Intacto (Protegido contra quebra){C_RESET}"
         elif p["tipo"] == "COLECAO":
@@ -494,9 +541,9 @@ def acao_diagnosticar_pastas(pasta_base: str):
             badge = f"{C_YELLOW}[MISTA]{C_RESET}"
             rec = f"{C_GRAY}Requer decisão manual{C_RESET}"
 
-        print(f"{C_YELLOW}[{i}]{C_RESET} {C_BOLD}{p['nome']}{C_RESET} {badge}")
-        print(f"    ↳ {p['qtd']} arquivos ({p['tamanho_fmt']}) • {p['motivo']}")
-        print(f"    ↳ {rec}\n")
+        print(f"{C_YELLOW}[{i:2d}]{C_RESET} {C_BOLD}{p['nome']}{C_RESET} {badge}")
+        print(f"     ↳ {p['qtd']} arquivos ({p['tamanho_fmt']}) • {p['motivo']}")
+        print(f"     ↳ {rec}\n")
 
     print(f"{C_GRAY}------------------------------------------------------------------------------{C_RESET}")
     esperar_tecla()
@@ -514,8 +561,17 @@ def acao_reorganizar_subpastas(pasta_base: str):
         return
 
     for i, p in enumerate(pastas, 1):
-        badge = f"[{p['tipo']}]"
-        print(f" {C_YELLOW}[{i:2d}]{C_RESET} {p['nome']} {C_GRAY}({p['qtd']} arqs, {p['tamanho_fmt']}) {badge}{C_RESET}")
+        if p["tipo"] == "PASTA_ORGANIZADA":
+            badge = f"{C_GREEN}[PASTA DO ORGANIZADOR]{C_RESET}"
+        elif p["tipo"] == "SOFTWARE_DRIVER":
+            badge = f"{C_MAGENTA}[DRIVER / SOFTWARE]{C_RESET}"
+        elif p["tipo"] == "COLECAO":
+            badge = f"{C_BLUE}[COLEÇÃO TEMÁTICA]{C_RESET}"
+        elif p["tipo"] == "VAZIA":
+            badge = f"{C_GRAY}[PASTA VAZIA]{C_RESET}"
+        else:
+            badge = f"{C_YELLOW}[MISTA]{C_RESET}"
+        print(f" {C_YELLOW}[{i:2d}]{C_RESET} {p['nome']} {C_GRAY}({p['qtd']} arqs, {p['tamanho_fmt']}) {badge}")
 
     print(f"\n{C_GRAY}------------------------------------------------------------------------------{C_RESET}")
     escolha = input(f"{C_BOLD}Digite o NÚMERO da pasta que deseja gerenciar (ou 0 para voltar): {C_RESET}").strip()
@@ -524,6 +580,27 @@ def acao_reorganizar_subpastas(pasta_base: str):
 
     p = pastas[int(escolha) - 1]
     print(f"\nGerenciando: {C_BOLD}{C_WHITE}{p['nome']}{C_RESET} {C_GRAY}({p['motivo']}){C_RESET}\n")
+
+    if p["tipo"] == "PASTA_ORGANIZADA":
+        print(f"{C_GREEN}✔ Esta pasta é uma das categorias padrão criadas pelo organizador.{C_RESET}")
+        print(f"  Categoria vinculada: {C_BOLD}{p['cat_dominante']}{C_RESET}")
+        print(f"  Contém atualmente:   {C_BOLD}{p['qtd']}{C_RESET} arquivos ({p['tamanho_fmt']})")
+        if p["qtd"] == 0:
+            print(f"\n{C_GRAY}Esta pasta está atualmente vazia.{C_RESET}")
+            conf = input(f"Deseja remover esta pasta de categoria vazia? [S/N]: ").strip().lower()
+            if conf == "s":
+                try:
+                    os.rmdir(p["caminho"])
+                    print(f"{C_GREEN}✔ Pasta vazia removida com sucesso!{C_RESET}")
+                except Exception as e:
+                    print(f"{C_RED}Erro ao remover: {e}{C_RESET}")
+                esperar_tecla()
+                return
+        else:
+            print(f"\n{C_YELLOW}Dica:{C_RESET} Esta pasta serve como destino automático para novas organizações.")
+            print(f"      Recomendamos mantê-la intacta.")
+            esperar_tecla()
+            return
 
     if p["tipo"] == "VAZIA":
         conf = input(f"Deseja excluir a pasta vazia '{p['nome']}'? [S/N]: ").strip().lower()
