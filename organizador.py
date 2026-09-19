@@ -48,7 +48,7 @@ CATEGORIAS = {
     },
     "Vídeos": {
         "pasta": "Vídeos",
-        "exts": {".mp4", ".mkv", ".avi", ".mov", ".wmv", ".webm", ".flv", ".m4v", ".mpg", ".mpeg", ".3gp", ".ts", ".m2ts"}
+        "exts": {".mp4", ".mkv", ".avi", ".mov", ".wmv", ".webm", ".flv", ".m4v", ".mpg", ".mpeg", ".3gp", ".m2ts"}
     },
     "Áudio": {
         "pasta": "Áudio",
@@ -64,7 +64,7 @@ CATEGORIAS = {
     },
     "Apresentações": {
         "pasta": "Apresentações",
-        "exts": {".pptx", ".ppt", ".pps", ".ppsx", ".key", ".odp", ".potx"}
+        "exts": {".pptx", ".ppt", ".pps", ".ppsx", ".odp", ".potx"}
     },
     "Livros e E-books": {
         "pasta": "Livros_e_Ebooks",
@@ -72,7 +72,7 @@ CATEGORIAS = {
     },
     "Design e 3D": {
         "pasta": "Design_e_3D",
-        "exts": {".psd", ".ai", ".eps", ".xd", ".fig", ".sketch", ".blend", ".obj", ".fbx", ".stl", ".3ds", ".step", ".stp", ".dwg", ".dxf", ".dae", ".ply", ".max", ".c4d"}
+        "exts": {".psd", ".ai", ".eps", ".xd", ".fig", ".sketch", ".blend", ".obj", ".fbx", ".stl", ".step", ".stp", ".dwg", ".dxf", ".dae", ".ply", ".max", ".c4d"}
     },
     "Fontes": {
         "pasta": "Fontes",

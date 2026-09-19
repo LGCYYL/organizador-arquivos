@@ -76,13 +76,13 @@ O Organizador LEG3NDY conta com mapeamento exaustivo para mais de 150 extensões
 | Categoria | Pasta de Destino | Extensões Suportadas |
 | :--- | :--- | :--- |
 | 🖼️ **Imagens** | `Imagens/` | `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.svg`, `.ico`, `.bmp`, `.tiff`, `.tif`, `.heic`, `.heif`, `.raw`, `.cr2`, `.nef`, `.arw` |
-| 🎬 **Vídeos** | `Vídeos/` | `.mp4`, `.mkv`, `.avi`, `.mov`, `.wmv`, `.webm`, `.flv`, `.m4v`, `.mpg`, `.mpeg`, `.3gp`, `.ts`, `.m2ts` |
+| 🎬 **Vídeos** | `Vídeos/` | `.mp4`, `.mkv`, `.avi`, `.mov`, `.wmv`, `.webm`, `.flv`, `.m4v`, `.mpg`, `.mpeg`, `.3gp`, `.m2ts` |
 | 🎵 **Áudio** | `Áudio/` | `.mp3`, `.wav`, `.ogg`, `.flac`, `.aac`, `.m4a`, `.wma`, `.opus`, `.aiff`, `.alac`, `.mid`, `.midi` |
 | 📄 **Documentos** | `Documentos/` | `.pdf`, `.docx`, `.doc`, `.txt`, `.md`, `.rtf`, `.odt`, `.pages`, `.tex` |
 | 📊 **Planilhas** | `Planilhas/` | `.xlsx`, `.xls`, `.csv`, `.tsv`, `.ods`, `.numbers`, `.xlsm`, `.xlsb` |
-| 📽️ **Apresentações** | `Apresentações/` | `.pptx`, `.ppt`, `.pps`, `.ppsx`, `.key`, `.odp`, `.potx` |
+| 📽️ **Apresentações** | `Apresentações/` | `.pptx`, `.ppt`, `.pps`, `.ppsx`, `.odp`, `.potx` |
 | 📚 **Livros e E-books** | `Livros_e_Ebooks/` | `.epub`, `.mobi`, `.azw`, `.azw3`, `.cbr`, `.cbz`, `.djvu`, `.fb2`, `.ibooks` |
-| 🎨 **Design e 3D** | `Design_e_3D/` | `.psd`, `.ai`, `.eps`, `.xd`, `.fig`, `.sketch`, `.blend`, `.obj`, `.fbx`, `.stl`, `.3ds`, `.step`, `.stp`, `.dwg`, `.dxf`, `.dae`, `.ply`, `.max`, `.c4d` |
+| 🎨 **Design e 3D** | `Design_e_3D/` | `.psd`, `.ai`, `.eps`, `.xd`, `.fig`, `.sketch`, `.blend`, `.obj`, `.fbx`, `.stl`, `.step`, `.stp`, `.dwg`, `.dxf`, `.dae`, `.ply`, `.max`, `.c4d` |
 | 🔤 **Fontes** | `Fontes/` | `.ttf`, `.otf`, `.woff`, `.woff2`, `.eot`, `.fon` |
 | 🎛️ **Presets e Projetos** | `Presets_e_Projetos/` | `.cube`, `.xmp`, `.lrtemplate`, `.aep`, `.prproj`, `.drp`, `.flp`, `.als`, `.cpr`, `.fst`, `.sf2`, `.ffx` |
 | ⚙️ **Instaladores** | `Instaladores/` | `.exe`, `.msi`, `.dmg`, `.pkg`, `.deb`, `.rpm`, `.appimage` |
