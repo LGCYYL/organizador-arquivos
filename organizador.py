@@ -155,7 +155,7 @@ carregar_config_customizada()
 
 EXT_IGNORADAS = {".crdownload", ".part", ".tmp", ".download", ".aria2"}
 ARQS_IGNORADOS = {
-    "desktop.ini", "thumbs.db", ".ds_store",
+    "desktop.ini", "thumbs.db", ".ds_store", ".localized", ".trash",
     ".organizador_historico.json", "organizador.py",
     "organizador_inteligente.cmd", "organizar_downloads.bat", "organizar.bat"
 }
@@ -199,8 +199,12 @@ def obter_categoria(nome_arquivo: str) -> str:
     if "organizador" in nome_lower or "organizar" in nome_lower or nome_lower.startswith(".organizador"):
         return "IGNORAR"
 
-    # 2. Ignorar arquivos de sistema, temporários ou arquivos ocultos que começam com ponto
-    if ext in EXT_IGNORADAS or nome_lower in ARQS_IGNORADOS or nome_lower.startswith("."):
+    # 2. Ignorar arquivos de sistema ou temporários de download
+    if ext in EXT_IGNORADAS or nome_lower in ARQS_IGNORADOS:
+        return "IGNORAR"
+
+    # Ignora dotfiles de configuração sem extensão (ex: .gitignore, .bashrc, .env)
+    if nome_lower.startswith(".") and not ext:
         return "IGNORAR"
 
     for nome_cat, config in CATEGORIAS.items():
@@ -247,6 +251,30 @@ def ler_tecla_opcao() -> str:
     except EOFError:
         return "0"
 
+def gravar_json_oculto(caminho_arquivo: str, dados: Any) -> bool:
+    """Grava dados em JSON garantindo que no Windows arquivos com atributo oculto não causem PermissionError."""
+    try:
+        if sys.platform == "win32" and os.path.exists(caminho_arquivo):
+            try:
+                import ctypes
+                ctypes.windll.kernel32.SetFileAttributesW(caminho_arquivo, 128) # FILE_ATTRIBUTE_NORMAL (0x80)
+            except Exception:
+                pass
+
+        with open(caminho_arquivo, "w", encoding="utf-8") as f:
+            json.dump(dados, f, indent=2, ensure_ascii=False)
+
+        if sys.platform == "win32":
+            try:
+                import ctypes
+                ctypes.windll.kernel32.SetFileAttributesW(caminho_arquivo, 2) # FILE_ATTRIBUTE_HIDDEN (0x2)
+            except Exception:
+                pass
+        return True
+    except Exception as e:
+        print(f"{C_RED}Erro ao salvar histórico: {e}{C_RESET}")
+        return False
+
 def salvar_historico(pasta_base: str, tipo_acao: str, movimentacoes: List[Dict[str, str]]):
     if not movimentacoes:
         return
@@ -266,18 +294,7 @@ def salvar_historico(pasta_base: str, tipo_acao: str, movimentacoes: List[Dict[s
         "movimentacoes": movimentacoes
     })
 
-    try:
-        with open(caminho_hist, "w", encoding="utf-8") as f:
-            json.dump(historico, f, indent=2, ensure_ascii=False)
-        # Oculta o arquivo no Windows para manter a pasta limpa
-        if sys.platform == "win32":
-            try:
-                import ctypes
-                ctypes.windll.kernel32.SetFileAttributesW(caminho_hist, 2)
-            except Exception:
-                pass
-    except Exception as e:
-        print(f"{C_RED}Erro ao salvar histórico: {e}{C_RESET}")
+    gravar_json_oculto(caminho_hist, historico)
 
 def escanear_arquivos(pasta_base: str) -> Dict[str, Any]:
     resultado = {cat: [] for cat in CATEGORIAS.keys()}
@@ -801,11 +818,7 @@ def acao_desfazer(pasta_base: str):
             except Exception as e:
                 print(f"{C_RED}✖ Falha ao restaurar {os.path.basename(destino)}: {e}{C_RESET}")
 
-    try:
-        with open(caminho_hist, "w", encoding="utf-8") as f:
-            json.dump(historico, f, indent=2, ensure_ascii=False)
-    except Exception:
-        pass
+    gravar_json_oculto(caminho_hist, historico)
 
     print(f"\n{C_GREEN}✔ Concluído! {restaurados} itens restaurados para o local original.{C_RESET}")
     esperar_tecla()
