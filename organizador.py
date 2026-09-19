@@ -156,8 +156,8 @@ carregar_config_customizada()
 EXT_IGNORADAS = {".crdownload", ".part", ".tmp", ".download", ".aria2"}
 ARQS_IGNORADOS = {
     "desktop.ini", "thumbs.db", ".ds_store", ".localized", ".trash",
-    ".organizador_historico.json", "organizador.py",
-    "organizador_inteligente.cmd", "organizar_downloads.bat", "organizar.bat"
+    ".organizador_historico.json", "organizador.py", "build_cmd.py",
+    "organizador-leg3ndy.cmd"
 }
 
 MARCADORES_SOFTWARE = {
@@ -184,19 +184,12 @@ def obter_categoria(nome_arquivo: str) -> str:
 
     # 1. Auto-detecção dinâmica: NUNCA move a si mesmo, independente de como o usuário renomear o arquivo!
     try:
-        self_exec = os.path.basename(sys.argv[0]).lower()
-        if nome_lower == self_exec:
+        if nome_lower == os.path.basename(sys.argv[0]).lower():
             return "IGNORAR"
     except Exception:
         pass
-    self_launcher = os.environ.get("ORGANIZADOR_SELF", "").lower()
-    if self_launcher and nome_lower == self_launcher:
-        return "IGNORAR"
-
-    # Ignora o próprio script python
     try:
-        self_py = os.path.basename(__file__).lower()
-        if nome_lower == self_py:
+        if nome_lower == os.path.basename(__file__).lower():
             return "IGNORAR"
     except Exception:
         pass
