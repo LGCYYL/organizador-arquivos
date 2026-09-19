@@ -154,6 +154,7 @@ organizador-arquivos/
 ├── build_cmd.py               # Compilador que gera o .cmd auto-suficiente
 ├── config.json                # Configuração personalizável de extensões
 ├── .gitignore                 # Arquivos ignorados pelo Git
+├── LICENSE                    # Licença MIT oficial
 └── README.md                  # Documentação oficial
 ```
 
@@ -175,4 +176,4 @@ O projeto é estruturado de forma desacoplada e limpa:
 
 ## 📜 Licença
 
-Distribuído sob a licença **MIT**. Sinta-se livre para usar, modificar e distribuir. Criado com orgulho pela **LEG3NDY Tech**.
+Distribuído sob a licença **MIT**. Sinta-se livre para usar, modificar e distribuir. Criado com orgulho pela **LEG3NDY**.
