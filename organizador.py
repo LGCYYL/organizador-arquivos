@@ -638,6 +638,14 @@ def acao_diagnosticar_pastas(pasta_base: str):
     print(f"{C_GRAY}------------------------------------------------------------------------------{C_RESET}")
     esperar_tecla()
 
+def tratar_erro_remocao(func, path, exc_info):
+    import stat
+    try:
+        os.chmod(path, stat.S_IWRITE)
+        func(path)
+    except Exception:
+        pass
+
 def acao_reorganizar_subpastas(pasta_base: str):
     limpar_tela()
     print(f"{C_CYAN}==============================================================================")
@@ -680,7 +688,7 @@ def acao_reorganizar_subpastas(pasta_base: str):
             conf = input(f"Deseja remover esta pasta de categoria vazia? [S/N]: ").strip().lower()
             if conf == "s":
                 try:
-                    os.rmdir(p["caminho"])
+                    shutil.rmtree(p["caminho"], onerror=tratar_erro_remocao)
                     print(f"{C_GREEN}✔ Pasta vazia removida com sucesso!{C_RESET}")
                 except Exception as e:
                     print(f"{C_RED}Erro ao remover: {e}{C_RESET}")
@@ -696,7 +704,7 @@ def acao_reorganizar_subpastas(pasta_base: str):
         conf = input(f"Deseja excluir a pasta vazia '{p['nome']}'? [S/N]: ").strip().lower()
         if conf == "s":
             try:
-                os.rmdir(p["caminho"])
+                shutil.rmtree(p["caminho"], onerror=tratar_erro_remocao)
                 print(f"{C_GREEN}✔ Pasta vazia excluída com sucesso!{C_RESET}")
             except Exception as e:
                 print(f"{C_RED}Erro ao excluir: {e}{C_RESET}")
